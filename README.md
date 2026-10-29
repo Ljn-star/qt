@@ -97,6 +97,6 @@ mingw32-make -j4
 
 ## 七、说明
 
-关于对话框与状态栏中的作者信息是占位内容，可在
-`aboutdialog.ui` 与 `mainwindow.cpp` 的 `createStatusBarWidgets()` 中改成自己的
-姓名、学号和邮箱。
+关于对话框与状态栏中的作者信息为：林佳年 / 2024414290218 / 2811283369@qq.com，
+如需修改可在 `aboutdialog.ui` 的 `labelInfo` 与 `mainwindow.cpp` 的
+`createStatusBarWidgets()` 中调整。

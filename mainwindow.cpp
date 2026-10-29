@@ -103,7 +103,7 @@ void MainWindow::createStatusBarWidgets()
 {
     m_statusLabel = new QLabel(this);
     m_cursorLabel = new QLabel(this);
-    m_authorLabel = new QLabel(QStringLiteral("Ljn-star"), this);
+    m_authorLabel = new QLabel(QStringLiteral("林佳年"), this);
 
     ui->statusBar->addPermanentWidget(m_statusLabel);
     ui->statusBar->addPermanentWidget(m_cursorLabel);
