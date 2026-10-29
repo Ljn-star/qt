@@ -6,6 +6,8 @@
 
 ![主窗口](docs/screenshots/main-window.png)
 
+GitHub 仓库：<https://github.com/Ljn-star/qt>
+
 ## 一、环境
 
 | 项目 | 版本 |
