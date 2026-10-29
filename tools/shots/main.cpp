@@ -5,10 +5,12 @@
 #include "codeeditor.h"
 
 #include <QApplication>
+#include <QClipboard>
 #include <QDir>
 #include <QEventLoop>
 #include <QFont>
 #include <QLineEdit>
+#include <QMenu>
 #include <QTimer>
 
 static void waitFor(int ms)
@@ -48,6 +50,37 @@ int main(int argc, char *argv[])
     editor->document()->setModified(false);
     waitFor(300);
     window.grab().save(outDir + QStringLiteral("/main-window.png"));
+
+    // cut / copy / paste 使能状态对比：编辑菜单
+    auto *menuEdit = window.findChild<QMenu *>(QStringLiteral("menuEdit"));
+    if (menuEdit) {
+        QApplication::clipboard()->clear();
+        QTextCursor cursor = editor->textCursor();
+        cursor.clearSelection();
+        cursor.movePosition(QTextCursor::Start);
+        editor->setTextCursor(cursor);
+        waitFor(200);
+
+        const QPoint pos = window.mapToGlobal(QPoint(8, 62));
+        menuEdit->move(pos);
+        menuEdit->show();
+        waitFor(500);
+        const QPixmap shot1 = menuEdit->grab();
+        shot1.save(outDir + QStringLiteral("/edit-menu-disabled.png"));
+        menuEdit->hide();
+        waitFor(200);
+
+        editor->selectAll();
+        QApplication::clipboard()->setText(QStringLiteral("clipboard"));
+        waitFor(300);
+
+        menuEdit->move(pos);
+        menuEdit->show();
+        waitFor(500);
+        const QPixmap shot2 = menuEdit->grab();
+        shot2.save(outDir + QStringLiteral("/edit-menu-enabled.png"));
+        menuEdit->hide();
+    }
 
     {
         AboutDialog dialog(&window);
