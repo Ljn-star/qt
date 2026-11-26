@@ -1,0 +1,114 @@
+********* Start testing of HospitalTests *********
+Config: Using QtTest library 6.11.2, Qt 6.11.2 (x86_64-little_endian-llp64 shared (dynamic) release build; by GCC 13.1.0), windows 11
+INFO   : HospitalTests::initTestCase() entering
+PASS   : HospitalTests::initTestCase()
+INFO   : HospitalTests::loginAcceptsAndRejectsCredentials() entering
+INFO   : HospitalTests::loginAcceptsAndRejectsCredentials() QVERIFY(m_tempDirectory->isValid())
+..\HospitalManagementSystem\tests\tst_hospital.cpp(35) : message location
+INFO   : HospitalTests::loginAcceptsAndRejectsCredentials() QVERIFY(DatabaseManager::instance().open( m_tempDirectory->filePath(QStringLiteral("hospital.sqlite"))))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(37) : message location
+INFO   : HospitalTests::loginAcceptsAndRejectsCredentials() QVERIFY(!DatabaseManager::instance().authenticate( QStringLiteral("admin"), QStringLiteral("bad-password"), &userId, &fullName, &error))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(54) : message location
+INFO   : HospitalTests::loginAcceptsAndRejectsCredentials() QVERIFY(error.contains(QStringLiteral("错误")))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(57) : message location
+INFO   : HospitalTests::loginAcceptsAndRejectsCredentials() QVERIFY(DatabaseManager::instance().authenticate( QStringLiteral("admin"), QStringLiteral("admin123"), &userId, &fullName, &error))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(59) : message location
+INFO   : HospitalTests::loginAcceptsAndRejectsCredentials() QVERIFY(!userId.isEmpty())
+..\HospitalManagementSystem\tests\tst_hospital.cpp(63) : message location
+INFO   : HospitalTests::loginAcceptsAndRejectsCredentials() QCOMPARE(fullName, QStringLiteral("系统管理员"))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(64) : message location
+PASS   : HospitalTests::loginAcceptsAndRejectsCredentials()
+INFO   : HospitalTests::requiredFieldsAndDuplicateDataAreRejected() entering
+INFO   : HospitalTests::requiredFieldsAndDuplicateDataAreRejected() QVERIFY(m_tempDirectory->isValid())
+..\HospitalManagementSystem\tests\tst_hospital.cpp(35) : message location
+INFO   : HospitalTests::requiredFieldsAndDuplicateDataAreRejected() QVERIFY(DatabaseManager::instance().open( m_tempDirectory->filePath(QStringLiteral("hospital.sqlite"))))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(37) : message location
+INFO   : HospitalTests::requiredFieldsAndDuplicateDataAreRejected() QVERIFY(!PatientRules::validate(missing, &validationError))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(72) : message location
+INFO   : HospitalTests::requiredFieldsAndDuplicateDataAreRejected() QVERIFY(validationError.contains(QStringLiteral("姓名")))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(73) : message location
+INFO   : HospitalTests::requiredFieldsAndDuplicateDataAreRejected() QVERIFY(model.addPatient(first, &databaseError))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(80) : message location
+INFO   : HospitalTests::requiredFieldsAndDuplicateDataAreRejected() QVERIFY(!model.addPatient(duplicate, &databaseError))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(84) : message location
+INFO   : HospitalTests::requiredFieldsAndDuplicateDataAreRejected() QVERIFY(!databaseError.isEmpty())
+..\HospitalManagementSystem\tests\tst_hospital.cpp(85) : message location
+INFO   : HospitalTests::requiredFieldsAndDuplicateDataAreRejected() QVERIFY(query.exec(QStringLiteral( "SELECT COUNT(*) FROM Patient WHERE ID_CARD = '441900200001011234'")))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(88) : message location
+INFO   : HospitalTests::requiredFieldsAndDuplicateDataAreRejected() QVERIFY(query.next())
+..\HospitalManagementSystem\tests\tst_hospital.cpp(90) : message location
+INFO   : HospitalTests::requiredFieldsAndDuplicateDataAreRejected() QCOMPARE(query.value(0).toInt(), 1)
+..\HospitalManagementSystem\tests\tst_hospital.cpp(91) : message location
+PASS   : HospitalTests::requiredFieldsAndDuplicateDataAreRejected()
+INFO   : HospitalTests::queryWithoutResultKeepsModelConsistent() entering
+INFO   : HospitalTests::queryWithoutResultKeepsModelConsistent() QVERIFY(m_tempDirectory->isValid())
+..\HospitalManagementSystem\tests\tst_hospital.cpp(35) : message location
+INFO   : HospitalTests::queryWithoutResultKeepsModelConsistent() QVERIFY(DatabaseManager::instance().open( m_tempDirectory->filePath(QStringLiteral("hospital.sqlite"))))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(37) : message location
+INFO   : HospitalTests::queryWithoutResultKeepsModelConsistent() QVERIFY(model.rowCount() >= 2)
+..\HospitalManagementSystem\tests\tst_hospital.cpp(98) : message location
+INFO   : HospitalTests::queryWithoutResultKeepsModelConsistent() QVERIFY(model.refresh(QStringLiteral("不会有这个患者"), &error))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(101) : message location
+INFO   : HospitalTests::queryWithoutResultKeepsModelConsistent() QCOMPARE(model.rowCount(), 0)
+..\HospitalManagementSystem\tests\tst_hospital.cpp(102) : message location
+INFO   : HospitalTests::queryWithoutResultKeepsModelConsistent() QVERIFY(model.refresh(QString(), &error))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(104) : message location
+INFO   : HospitalTests::queryWithoutResultKeepsModelConsistent() QCOMPARE(model.rowCount(), originalCount)
+..\HospitalManagementSystem\tests\tst_hospital.cpp(105) : message location
+PASS   : HospitalTests::queryWithoutResultKeepsModelConsistent()
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() entering
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QVERIFY(m_tempDirectory->isValid())
+..\HospitalManagementSystem\tests\tst_hospital.cpp(35) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QVERIFY(DatabaseManager::instance().open( m_tempDirectory->filePath(QStringLiteral("hospital.sqlite"))))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(37) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QVERIFY(model.addPatient(patient, &error))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(117) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QCOMPARE(model.rowCount(), initialCount + 1)
+..\HospitalManagementSystem\tests\tst_hospital.cpp(118) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QVERIFY(model.rowForId(patient.id) >= 0)
+..\HospitalManagementSystem\tests\tst_hospital.cpp(119) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QVERIFY(query.exec())
+..\HospitalManagementSystem\tests\tst_hospital.cpp(124) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QVERIFY(query.next())
+..\HospitalManagementSystem\tests\tst_hospital.cpp(125) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QCOMPARE(query.value(0).toString(), patient.name)
+..\HospitalManagementSystem\tests\tst_hospital.cpp(126) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QVERIFY(model.updatePatient(patient.id, patient, &error))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(130) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QCOMPARE(model.record(model.rowForId(patient.id)) .value(QStringLiteral("NAME")).toString(), patient.name)
+..\HospitalManagementSystem\tests\tst_hospital.cpp(131) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QVERIFY(query.exec())
+..\HospitalManagementSystem\tests\tst_hospital.cpp(137) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QVERIFY(query.next())
+..\HospitalManagementSystem\tests\tst_hospital.cpp(138) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QCOMPARE(query.value(0).toString(), patient.name)
+..\HospitalManagementSystem\tests\tst_hospital.cpp(139) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QCOMPARE(query.value(1).toDouble(), 68.3)
+..\HospitalManagementSystem\tests\tst_hospital.cpp(140) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QVERIFY(model.removePatient(patient.id, &error))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(142) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QCOMPARE(model.rowCount(), initialCount)
+..\HospitalManagementSystem\tests\tst_hospital.cpp(143) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QVERIFY(model.rowForId(patient.id) < 0)
+..\HospitalManagementSystem\tests\tst_hospital.cpp(144) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QVERIFY(query.exec())
+..\HospitalManagementSystem\tests\tst_hospital.cpp(148) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QVERIFY(query.next())
+..\HospitalManagementSystem\tests\tst_hospital.cpp(149) : message location
+INFO   : HospitalTests::crudKeepsDatabaseAndViewInSync() QCOMPARE(query.value(0).toInt(), 0)
+..\HospitalManagementSystem\tests\tst_hospital.cpp(150) : message location
+PASS   : HospitalTests::crudKeepsDatabaseAndViewInSync()
+INFO   : HospitalTests::invalidDatabasePathReportsError() entering
+INFO   : HospitalTests::invalidDatabasePathReportsError() QVERIFY(m_tempDirectory->isValid())
+..\HospitalManagementSystem\tests\tst_hospital.cpp(35) : message location
+INFO   : HospitalTests::invalidDatabasePathReportsError() QVERIFY(DatabaseManager::instance().open( m_tempDirectory->filePath(QStringLiteral("hospital.sqlite"))))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(37) : message location
+INFO   : HospitalTests::invalidDatabasePathReportsError() QVERIFY(!DatabaseManager::instance().open(m_tempDirectory->path()))
+..\HospitalManagementSystem\tests\tst_hospital.cpp(156) : message location
+INFO   : HospitalTests::invalidDatabasePathReportsError() QVERIFY(!DatabaseManager::instance().errorString().isEmpty())
+..\HospitalManagementSystem\tests\tst_hospital.cpp(157) : message location
+PASS   : HospitalTests::invalidDatabasePathReportsError()
+INFO   : HospitalTests::cleanupTestCase() entering
+PASS   : HospitalTests::cleanupTestCase()
+Totals: 7 passed, 0 failed, 0 skipped, 0 blacklisted, 169ms
+********* Finished testing of HospitalTests *********
